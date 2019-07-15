@@ -6,19 +6,14 @@ import java.awt.GridLayout;
 import java.awt.TextArea;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import com.zxd.TestSys.beans.User;
 import com.zxd.TestSys.service.ClientContext;
-import com.zxd.TestSys.service.EntityContext;
-import com.zxd.TestSys.service.ExamService;
 
 public class ExamFrame extends JFrame{
 	
@@ -39,8 +34,7 @@ public class ExamFrame extends JFrame{
 	private JCheckBox choiceC ;
 	private JCheckBox choiceD ;
 	private ClientContext uiController;
-	private ExamService backController;
-	private EntityContext database;
+
 	public ExamFrame() {
 		infoPanel = new JPanel();
 		questionPanel = new JPanel();
@@ -95,31 +89,27 @@ public class ExamFrame extends JFrame{
 		this.setSize(700, 650);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
+		disableChoices();
 		ActionListen();
 	}
 	
 	public void ActionListen() {
-		this.lastquebutton.setEnabled(false);
-		this.choiceA.setEnabled(false);
-		this.choiceB.setEnabled(false);
-		this.choiceC.setEnabled(false);
-		this.choiceD.setEnabled(false);
 		this.nextquebutton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				backController.showNextQuestion();
+				uiController.showNextQuestion();
 			}
 		});
 		this.lastquebutton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				backController.showLastQuestion();
+				uiController.showLastQuestion();
 			}
 		});
 		this.uploadbutton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				backController.examOver();
+				uiController.showScore();
 			}
 		});
 	}
@@ -132,15 +122,23 @@ public class ExamFrame extends JFrame{
 		choiceD.setEnabled(true);
 		nextquebutton.setText("下一题");
 	}
-	
 	public void disableChoices() {
+		lastquebutton.setEnabled(false);
+		choiceA.setEnabled(false);
+		choiceB.setEnabled(false);
+		choiceC.setEnabled(false);
+		choiceD.setEnabled(false);
+		nextquebutton.setText("开始考试");
+	}
+	
+	public void initSelection() {
 		choiceA.setSelected(false);
 		choiceB.setSelected(false);
 		choiceC.setSelected(false);
 		choiceD.setSelected(false);
 	}
 	
-	public void changeQuestionText(String que_description) {
+	public void updateQuestion(String que_description) {
 		questArea.setText(que_description);
 	}
 	public void showSelected(int ans) {
@@ -169,38 +167,19 @@ public class ExamFrame extends JFrame{
 		this.uiController = uiController;
 	}
 
-	public ExamService getExamController() {
-		return backController;
-	}
-
-	public void setExamController(ExamService examController) {
-		this.backController = examController;
-	}
-
-	public EntityContext getDatabase() {
-		return database;
-	}
-
-	public void setDatabase(EntityContext database) {
-		this.database = database;
-	}
-
 	public void updateTimer(String leftTime) {
 		this.timerlabel.setText(leftTime);
 	}	 
+	
 	public static void main(String[] args) {
 		ExamFrame ef = new ExamFrame();
-		ExamService es = new ExamService();
-		es.setExamFrame(ef);
-		ef.setBackController(es);
 		ef.setVisible(true);
 	}
+	
 	public void setController(ClientContext clientContext) {
 		this.uiController = clientContext;
 	}
-	public void setBackController(ExamService es) {
-		this.backController = es;
-	}
+
 	public boolean[] getSelections() {
 		boolean[] isSelected = {choiceA.isSelected(),choiceB.isSelected(),
 				choiceC.isSelected(),choiceD.isSelected()};

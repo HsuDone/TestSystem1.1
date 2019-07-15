@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -30,8 +29,8 @@ public class EntityContext {
 		return inputUser;
 	}
 	
-	public void setInputUser(String userId) {
-		inputUser = this.usermap.get(userId);
+	public void setInputUser(User legalUser) {
+		inputUser = legalUser;
 	}
 	
 	public Map<Integer, List<Question>> getquestionsMap()  {
@@ -106,7 +105,7 @@ public class EntityContext {
 		return p;
 	}
 	
-	public Map<String,User> getUsers() {
+	private Map<String,User> getUsers() {
 		BufferedReader br = null;
 		Map<String, User> map = new HashMap<>();
 		try {

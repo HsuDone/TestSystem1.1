@@ -13,14 +13,14 @@ import javax.swing.JPanel;
 
 import com.zxd.TestSys.service.ClientContext;
 
-public class RulesFrame extends JFrame{
-	private TextArea rulesArea ;
+public class ResultFrame extends JFrame{
+	private TextArea resultArea ;
 	private JPanel	textPanel;
 	private JPanel buttonPanel;
 	private JButton confirmButton;
 	private ClientContext uiController;
-	public RulesFrame() {
-		rulesArea = new TextArea(12, 70);
+	public ResultFrame() {
+		resultArea = new TextArea(12, 70);
 		buttonPanel = new JPanel();
 		textPanel = new JPanel();
 		confirmButton = new JButton("确定");
@@ -34,9 +34,9 @@ public class RulesFrame extends JFrame{
 		buttonPanel.setLayout(new FlowLayout());
 		textPanel.setLayout(new FlowLayout());
 		Font	f = new Font("宋体", Font.PLAIN, 16);
-		rulesArea.setFont(f);
+		resultArea.setFont(f);
 		confirmButton.setFont(f);
-		textPanel.add(rulesArea);
+		textPanel.add(resultArea);
 		buttonPanel.add(confirmButton);
 		this.add(textPanel,BorderLayout.CENTER);
 		this.add(buttonPanel,BorderLayout.SOUTH);
@@ -50,13 +50,13 @@ public class RulesFrame extends JFrame{
 			}
 		});
 	}
-	public void updateRules(String rules) {
-		this.rulesArea.setText(rules);
+	public void updateResult(String rules) {
+		this.resultArea.setText(rules);
 	}
 	public void setUiController(ClientContext cc) {
 		this.uiController = cc;
 	}
 	public static void main(String[] args) {
-		new RulesFrame().setVisible(true);
+		new ResultFrame().setVisible(true);
 	}
 }

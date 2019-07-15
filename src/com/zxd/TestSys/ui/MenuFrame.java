@@ -16,17 +16,14 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import com.zxd.TestSys.Util.Resources;
-import com.zxd.TestSys.beans.User;
 import com.zxd.TestSys.service.ClientContext;
-import com.zxd.TestSys.service.EntityContext;
 
 public class MenuFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel buttonsPanel, labelsPanel,otherPanel;
-	private JButton examButton, resultButton, rulesButton, exitButton,configButton;
+	private JButton examButton, resultButton, rulesButton, exitButton,infosButton;
 	private JLabel iconlabel, namelabel,welcomelabel;
 	private ClientContext uiController;
-	private EntityContext database;
 	
 	public MenuFrame() {
 		buttonsPanel = new JPanel();
@@ -61,11 +58,11 @@ public class MenuFrame extends JFrame {
 		exitButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		exitButton.setBackground(Color.WHITE);
 		
-		configButton = new JButton("用户配置",Resources.userconfig);
-		configButton.setFont(f);
-		configButton.setHorizontalTextPosition(SwingConstants.CENTER);
-		configButton.setVerticalTextPosition(SwingConstants.BOTTOM);
-		configButton.setBackground(Color.WHITE);
+		infosButton = new JButton("个人信息",Resources.userconfig);
+		infosButton.setFont(f);
+		infosButton.setHorizontalTextPosition(SwingConstants.CENTER);
+		infosButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+		infosButton.setBackground(Color.WHITE);
 		
 		initGUI();
 		this.setSize(600, 650);
@@ -89,7 +86,7 @@ public class MenuFrame extends JFrame {
 		buttonsPanel.add(resultButton);
 		buttonsPanel.add(rulesButton);
 		buttonsPanel.add(exitButton);
-		buttonsPanel.add(configButton);
+		buttonsPanel.add(infosButton);
 		labelsPanel.setLayout(new GridLayout(3, 1));
 		labelsPanel.add(iconlabel);
 		labelsPanel.add(namelabel);
@@ -123,16 +120,25 @@ public class MenuFrame extends JFrame {
 		examButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				uiController.examStart(database.getInputUser());
+				uiController.showExam();
 			}
 		});
 		resultButton.addMouseListener(new MouseAdapter() {
-			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				uiController.showResults();
+			}
 		});
 		rulesButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				uiController.showRules();
+			}
+		});
+		infosButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				uiController.showMyInfos();
 			}
 		});
 	}
@@ -143,14 +149,6 @@ public class MenuFrame extends JFrame {
 
 	public void setUiController(ClientContext uiController) {
 		this.uiController = uiController;
-	}
-
-	public EntityContext getDatabase() {
-		return database;
-	}
-
-	public void setDatabase(EntityContext database) {
-		this.database = database;
 	}
 
 	public static void main(String[] args) {

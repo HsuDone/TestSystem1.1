@@ -1,6 +1,5 @@
 package com.zxd.TestSys.beans;
 
-import java.util.Map;
 
 public class User {
 	private String UserId;
