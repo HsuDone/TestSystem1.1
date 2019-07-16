@@ -45,6 +45,7 @@ public class ExamFrame extends JFrame{
 		namelabel = new JLabel("姓名:xxx");
 		namelabel.setFont(f);
 		timerlabel = new JLabel("",JLabel.RIGHT);
+		timerlabel.setFont(f);
 		idlabel = new JLabel("编号:xxx");
 		idlabel.setFont(f);
 		sumtimelabel = new JLabel("时间:60分钟");

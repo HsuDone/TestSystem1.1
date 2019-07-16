@@ -20,11 +20,11 @@ public class ResultFrame extends JFrame{
 	private JButton confirmButton;
 	private ClientContext uiController;
 	public ResultFrame() {
-		resultArea = new TextArea(12, 70);
+		resultArea = new TextArea(30, 60);
 		buttonPanel = new JPanel();
 		textPanel = new JPanel();
 		confirmButton = new JButton("确定");
-		this.setSize(700, 300);
+		this.setSize(650, 600);
 		this.setLocationRelativeTo(null);
 		this.setUndecorated(true);
 		this.GUIinit();
