@@ -88,7 +88,6 @@ public class ExamService {
 				{
 					uiController.showChoices();
 					initMyAnswer();
-					isOver = false;
 					isBegin = true;
 					configTimer();
 					++quesIndex;
@@ -142,10 +141,7 @@ public class ExamService {
 			public void run() {
 				long leftms=end-System.currentTimeMillis();
 				if(leftms<0 || isOver)
-				{
-					this.cancel();
 					return;
-				}
 				uiController.showTimer(parseTime2Str(leftms));
 			}
 		},0,1000);
@@ -155,8 +151,17 @@ public class ExamService {
 		 int h=(int)(sub/1000/60/60);
 		 int m=(int)(sub/1000/60%60);
 		 int s=(int)(sub/1000%60);
-		 String str="剩余时间: "+h+":"+m+":"+s;
-		 return str;
+		 String str=h+":"+m+":"+s;
+		  //将String类型转换成Date类型的格式
+		 SimpleDateFormat sdf=new SimpleDateFormat("HH:mm:ss");
+		 Date date=new Date();
+		 try{
+			 date=sdf.parse(str);
+		 }catch(Exception e){
+		 e.printStackTrace();
+		 }
+		 //将Date类型的数设置成想要显示的时间格式,并写入JLable中
+		 return sdf.format(date);
 	}
 	
 	public void examOver() {
@@ -190,7 +195,7 @@ public class ExamService {
 	public int getSumPoints(List<Question> ques,Map<Integer , List<Integer>> answers) 
 	{
 		int sum = 0;
-		result = new StringBuilder("用户:"+database.getInputUser().getName()+"\r\n本次考试成绩如下:\r\n");
+		result = new StringBuilder();
 		for(int i = 0 ;i < ques.size() ; i ++) {
 			result.append("NO."+(i+1));
 			Question q = ques.get(i);
